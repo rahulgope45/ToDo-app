@@ -1,3 +1,4 @@
+import { text } from "@fortawesome/fontawesome-svg-core";
 import React, { useState } from "react";
 
 
@@ -16,7 +17,7 @@ function Todoform(){
 
     const saveinput = () =>{
         if(inputvalue.trim() !== ""){
-            fvalue([...handlevalue,inputvalue])
+            fvalue([...handlevalue,{text : inputvalue,completed:false}])
             envalue("")
         }
     }
@@ -28,6 +29,16 @@ function Todoform(){
         const deletelist = handlevalue.filter((_,index) => index !== deletehandle)
         fvalue(deletelist)
         
+    }
+  
+
+    //adding slect feature that will make completed task lin through task
+    const toggleinput = (index) =>{
+
+        const updatetoggle = [...handlevalue]
+        updatetoggle[index].completed = !updatetoggle[index].completed
+        fvalue(updatetoggle)
+
     }
 
 
@@ -52,12 +63,25 @@ function Todoform(){
             <div>
                 {handlevalue.map((item,index)=>(
                     
-                    <p key={index}>*{item}
+                    <p key={index}
+
+                    style={{textDecoration : item.completed ? "line-through" : "none"}}
+                    
+                    >
+                        *{item.text}
+
+                    <input type="radio"
+                    name={`completed-${index}`}
+                    onClick={() => toggleinput(index)}
+                    
+                    >
+
+                    </input>
                     <button onClick={() => inputDelete(index)}> 
                         
                         ❌
                         </button>
-                        <input type="radio"></input>
+                        
                     </p>
                     
                 ))}
