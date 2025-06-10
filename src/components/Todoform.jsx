@@ -10,8 +10,15 @@ function Todoapp(){
 
     const [input,setInput] = useState("")
     const [striked,setStriked] =useState([])
-    //button color
-    const [clicked,setClicked] = useState(false)
+    //Junrol dates
+    const [jdateY,setJdateY] =useState(new Date().getFullYear())
+    const [jdateD,setJdateD] =useState(new Date().getDate())
+    const [jDateM,setJdateM] =useState(new Date().getMonth())
+    const [jdateT,setJdateT] =useState(new Date().toLocaleTimeString())
+
+    const [journal,setJounral] =useState("")
+    const [jounralEnteries,setEnteries] = useState([])
+    
     function HandleInput(){
         // const newInput = document.getElementById("Tasks").value
         // document.getElementById("Tasks").value = "" //
@@ -41,9 +48,28 @@ function Todoapp(){
 
     }
 
-    const filterratedtasks = ()=>{
+    //Jounral Part
+    const saveJounral =() =>{
+        if(journal.trim() !== ""){
+            const waqtYear = new Date().toLocaleTimeString()
+            const waqtdate =new Date().getDate()
+            const waqtMonth = new Date().getMonth()
+            const waqtSaal = new Date().getFullYear()
+            const waqtDay = new Date().toLocaleDateString("en-US", { weekday: "long" })
+            setEnteries([...jounralEnteries,{text :journal,Waqt : waqtYear,WaqtDa: waqtdate ,WaqtM:waqtMonth,WaqtY:waqtSaal,WaqtDay:waqtDay}])
+            setJounral("")
+
+        }
+    }
+    //delete Journal
+    function deleteJ  (index){
+        setEnteries(jounralEnteries.filter((_,i)=> i !== index))
 
     }
+
+    
+
+    
 
     switch(activestate){
         case 'Tasks':
@@ -111,6 +137,34 @@ function Todoapp(){
         case 'Journal':
             return <div>
                 <h2>Journal</h2>
+                <p>Date: {jdateD}/{jDateM}/{jdateY}</p>
+                <p>Time: {jdateT}</p>
+                <div>
+                    <textarea placeholder="Dear Diary..." className="diary-textarea" value={journal}
+                     onChange={(e) => setJounral(e.target.value)}/>
+                    <br/>
+                    <button onClick={saveJounral}>Add</button>
+                    
+                    <ol>
+                        {jounralEnteries.map((entry,index) =>
+                            (<li key={index} className="diary-entry">
+                                Date: {entry.WaqtDa}/{entry.WaqtM}/{entry.WaqtY}<br/>
+                                Day:{entry.WaqtDay}<br/>
+                                Time: {entry.Waqt}<br/>
+                                <br/>
+                                {entry.text}
+                                <br/>
+                                <button onClick={() =>deleteJ(index)} >Delete</button>
+                            </li>))}
+                           
+                                
+                            
+
+                    </ol>
+                
+
+                </div>
+                
             </div>
 
         default: 
@@ -124,7 +178,8 @@ function Todoapp(){
 
 
     return(
-        <><div className="heading"> 
+        <><div className="container-box">
+             <div className="heading"> 
                 <h1>Taskify</h1>
             </div>
          <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
@@ -138,6 +193,8 @@ function Todoapp(){
         <div style={{ padding: '1rem', border: '1px solid #ccc' }}>
             {renderTable()}
         </div>
+        </div>
+       
         
         
         </>
