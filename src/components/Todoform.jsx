@@ -1,75 +1,100 @@
-import React, { useState } from "react";
+import { text } from "@fortawesome/fontawesome-svg-core"
+import React,{useState} from "react"
 
+function Todoapp(){
 
+    //setting up table
 
-function Todoform(){
-
-    const[inputvalue,envalue] = useState("") //for tracking input
-    const[handlevalue,fvalue] = useState([]) //for saving the input
-                                             //saving it in a array
-
-
-
-    const handledinputvalue = (e) =>{
-        envalue(e.target.value)
-    }
-
-    const saveinput = () =>{
-        if(inputvalue.trim() !== ""){
-            fvalue([...handlevalue,inputvalue])
-            envalue("")
-        }
-    }
-
-    //deleting the task one at a time
-
-    const inputDelete = (deletehandle) =>{
-
-        const deletelist = handlevalue.filter((_,index) => index !== deletehandle)
-        fvalue(deletelist)
+    const [activestate,setState] = useState('')
+    const renderTable = ()=>{
         
     }
 
 
+    const [input,setInput] = useState("")
+    const [striked,setStriked] =useState([])
+    function HandleInput(){
+        // const newInput = document.getElementById("Tasks").value
+        // document.getElementById("Tasks").value = "" //
 
-    return (
-        <div className="Containerofbox">
-            <div className="boxofcontainer">
-                <h1 className="headingofcontainer">Add Your Tasks </h1>
+        
+        
+
+    }
+
+    const saveInput =()=>{
+        if(input.trim() !== ""){
+            setStriked([...striked,{text: input , completed : false}])
+            // setInput(i => [...i,newInput])
+            setInput("") //
+        }
+    }
+
+    function deleteInputs(index){
+        setStriked(striked.filter((_,i) => i !== index))  
+    }
+
+    const toogleinput = (index)=>{
+        const updateToogle = [...striked]
+        updateToogle[index].completed = !updateToogle[index].completed
+        setStriked(updateToogle)
+
+
+    }
+
+
+    // using switch case here to make tabs
+
+    
+
+
+   
+
+
+
+    return(
+        <>
+        <div className="Container-app">
+            <div className="heading"> 
+                <h1>Taskify</h1>
+            </div>
+            <div className="Task-container">
+                <input type="text" value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                       placeholder=" Enter Your task"/>
+                    <button onClick={saveInput}>Add</button>
             </div>
             <div>
-                <input
-                type="text"
-                placeholder="Add Your Task"
-                value={inputvalue}
-                onChange={handledinputvalue}>
-                </input>
-                <button onClick = {saveinput}>
+                <ol >
+                    {striked.map((items,index) => (
+                    <li key={index} 
+                    style={{textDecoration : items.completed ? "line-through" : "none",}}
                     
-                    Add
-                </button>
-            </div>
-            <div>
-                {handlevalue.map((item,index)=>(
-                    
-                    <p key={index}>*{item}
-                    <button onClick={() => inputDelete(index)}> 
-                        
-                        ❌
+                    >{items.text}
+
+                    <input type="radio"
+                name={`completed-${index}`}
+                onClick={() => toogleinput(index)}
+                style={{accentColor : striked[index].completed ? "red"  : "green",
+                    backgroundColor: striked[index].completed ? "red"  : "green",
+                }}
+                />
+                     
+                    <button onClick={() =>deleteInputs(index)}>
+                        Delete
                         </button>
-                        <input type="radio"></input>
-                    </p>
-                    
-                ))}
-                
-                
-               
+                        </li>)) }
+                        
+                </ol>
+
             </div>
-            
 
         </div>
+        
+        </>
     )
+
 }
 
-export default Todoform
+export default Todoapp
 

@@ -1,10 +1,10 @@
 import React from "react";
 import './App.css';
-import Todoform from "./components/Todoform";
+import Todoapp from "./components/Todoform";
 function App() {
   return (
     
-   <Todoform/>
+   <Todoapp/>
   );
 }
 
