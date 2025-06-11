@@ -123,11 +123,13 @@ function Todoapp(){
             <div className="Task-container">
                 <input type="text" value={input}
                     onChange={(e) => setInput(e.target.value)}
-                       placeholder=" Enter Your task"/>
-                    <button onClick={saveInput}>Add</button>
+                       placeholder=" Enter Your task"
+                       className="Input-container"/>
+                    <button onClick={saveInput} className="Add-button">Add</button>
             </div>
-            <div>
-                <ol >
+            <br/>
+            <div className="todolist-container">
+                <ol className="Task-list">
                     {striked.map((items,index) => (
                     <motion.li 
                     key={index} 
@@ -135,18 +137,20 @@ function Todoapp(){
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     style={{textDecoration : items.completed ? "line-through" : "none",}}
+                    className={"Task-item "}
                     
                     >{items.text}
 
                     <input type="radio"
                 name={`completed-${index}`}
                 onClick={() => toogleinput(index)}
-                style={{accentColor : striked[index].completed ? "red"  : "green",
-                    backgroundColor: striked[index].completed ? "red"  : "green",
-                }}
+                //style={{accentColor : striked[index].completed ? "red"  : "green",
+                   // backgroundColor: striked[index].completed ? "red"  : "green",
+                //}}
+                 className={`Task-radio ${items.completed ? 'completed-radio' : ''}`}
                 />
                      
-                    <button onClick={() =>deleteInputs(index)}>
+                    <button onClick={() =>deleteInputs(index)} className="Delete-button">
                         Delete
                         </button>
                         </motion.li>)) }
@@ -158,11 +162,11 @@ function Todoapp(){
         </div>
 
         case 'Active-Tasks':
-            return <div>
+            return <div className="Active-task">
                 <h2>Active Tasks</h2>
                 <ol>
                     {striked.map((items,index)=>(
-                        <li key={index}>
+                        <li key={index} className="Active-task-li">
                             {items.text}
                         </li>
                     ))}
@@ -170,13 +174,13 @@ function Todoapp(){
             </div>
 
         case 'Completed-Tasks':
-            return <div>
+            return <div className="Active-task">
                 <h2>Completed Tasks</h2>
                  <ol>
                     {striked
                 .filter(items => items.completed)  // only completed tasks
                 .map((items, index) => (
-                    <li key={index}>{items.text}</li>
+                    <li key={index} className="Active-task-li">{items.text}</li>
                 ))
             }
 
@@ -185,16 +189,20 @@ function Todoapp(){
 
         case 'Journal':
             return <div>
-                <h2>Journal</h2>
+                {/* <h2>Journal</h2> */}
                 <p>Date: {jdateD}/{jDateM}/{jdateY}</p>
                 <p>Time: {jdateT}</p>
                 <div>
                     <textarea placeholder="Dear Diary..." className="diary-textarea" value={journal}
                      onChange={(e) => setJounral(e.target.value)}/>
                     <br/>
-                    <button onClick={saveJounral}>Add</button>
+                    <div className="Jounral-Button">
+                        <button onClick={saveJounral} className="Delete-button">Add</button>
+
+                    </div>
                     
-                    <ol>
+                    <div className="Jounral-Button">
+                        <ol>
                         {jounralEnteries.map((entry,index) =>(
 
 
@@ -248,6 +256,9 @@ function Todoapp(){
                             
 
                     </ol>
+
+                    </div>
+                    
                 
 
                 </div>
