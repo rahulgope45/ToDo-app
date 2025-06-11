@@ -2,13 +2,7 @@ import { text } from "@fortawesome/fontawesome-svg-core"
 import React,{useState} from "react"
 
 function Todoapp(){
-
-    //setting up table
-
-    const [activestate,setState] = useState('Tasks')
-    const renderTable = ()=>{
-
-    const [input,setInput] = useState("")
+     const [input,setInput] = useState("")
     const [striked,setStriked] =useState([])
     //Junrol dates
     const [jdateY,setJdateY] =useState(new Date().getFullYear())
@@ -18,6 +12,17 @@ function Todoapp(){
 
     const [journal,setJounral] =useState("")
     const [jounralEnteries,setEnteries] = useState([])
+
+    const completedTasks = striked.filter((item) => item.completed).length;
+
+    //setting up table
+
+    const [activestate,setState] = useState('Tasks')
+    const renderTable = ()=>{
+
+   
+     //footer
+    
     
     function HandleInput(){
         // const newInput = document.getElementById("Tasks").value
@@ -66,6 +71,9 @@ function Todoapp(){
         setEnteries(jounralEnteries.filter((_,i)=> i !== index))
 
     }
+
+   
+    
 
     
 
@@ -192,6 +200,12 @@ function Todoapp(){
         </div>
         <div style={{ padding: '1rem', border: '1px solid #ccc' }}>
             {renderTable()}
+        </div>
+        {/* Footer */}
+        <div style={{ padding: '1rem', border: '1px solid #ccc' }}>
+            <p>Tasks: {striked.length}</p>
+           <p>Completed Tasks: {completedTasks}</p>
+
         </div>
         </div>
        
