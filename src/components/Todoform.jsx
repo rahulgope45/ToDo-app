@@ -1,9 +1,13 @@
 import { text } from "@fortawesome/fontawesome-svg-core"
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
+import { motion,AnimatePresence } from "framer-motion";
 
 function Todoapp(){
      const [input,setInput] = useState("")
-    const [striked,setStriked] =useState([])
+    const [striked,setStriked] =useState(()=>{
+        const savedTasks =localStorage.getItem("Tasks")
+        return savedTasks ? JSON.parse(savedTasks) : [] 
+        })
     //Junrol dates
     const [jdateY,setJdateY] =useState(new Date().getFullYear())
     const [jdateD,setJdateD] =useState(new Date().getDate())
@@ -11,9 +15,42 @@ function Todoapp(){
     const [jdateT,setJdateT] =useState(new Date().toLocaleTimeString())
 
     const [journal,setJounral] =useState("")
-    const [jounralEnteries,setEnteries] = useState([])
+    const [jounralEnteries,setEnteries] = useState(() => {
+        const savedJounral = localStorage.getItem("JTasks")
+        return savedJounral ? JSON.parse(savedJounral) : []
+    })
 
     const completedTasks = striked.filter((item) => item.completed).length;
+
+    //unnessary animation
+
+    const [expandindex,setexpandIn] = useState(null)
+    const toggleExpand =(i) =>{
+                                setexpandIn(expandindex ===i ? null:i)
+                            }
+
+
+   
+
+    // //reading storage
+    // useEffect(()=>{
+    //     const savedTasks = JSON.parse(localStorage.getItem("Tasks"))
+    //     if(savedTasks){
+    //         setStriked(savedTasks)
+    //     }
+    // },[])
+
+     //storing
+    useEffect(() =>{
+        localStorage.setItem("Tasks",JSON.stringify(striked))
+    },[striked])
+
+    useEffect(() =>{
+        localStorage.setItem("JTasks",JSON.stringify(jounralEnteries))
+    },[jounralEnteries])
+
+
+
 
     //setting up table
 
@@ -92,7 +129,11 @@ function Todoapp(){
             <div>
                 <ol >
                     {striked.map((items,index) => (
-                    <li key={index} 
+                    <motion.li 
+                    key={index} 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
                     style={{textDecoration : items.completed ? "line-through" : "none",}}
                     
                     >{items.text}
@@ -108,7 +149,7 @@ function Todoapp(){
                     <button onClick={() =>deleteInputs(index)}>
                         Delete
                         </button>
-                        </li>)) }
+                        </motion.li>)) }
                         
                 </ol>
 
@@ -154,16 +195,54 @@ function Todoapp(){
                     <button onClick={saveJounral}>Add</button>
                     
                     <ol>
-                        {jounralEnteries.map((entry,index) =>
-                            (<li key={index} className="diary-entry">
-                                Date: {entry.WaqtDa}/{entry.WaqtM}/{entry.WaqtY}<br/>
-                                Day:{entry.WaqtDay}<br/>
-                                Time: {entry.Waqt}<br/>
-                                <br/>
-                                {entry.text}
-                                <br/>
-                                <button onClick={() =>deleteJ(index)} >Delete</button>
-                            </li>))}
+                        {jounralEnteries.map((entry,index) =>(
+
+
+
+                    <motion.li
+      layout
+      initial={{ borderRadius: 10 }}
+      key={index}
+      className="diary-entry"
+      onClick={() => toggleExpand(index)}
+      style={{ cursor: "pointer" }}
+    >
+      <strong>Date:</strong> {entry.WaqtDa}/{entry.WaqtM}/{entry.WaqtY}
+      <br />
+      <strong>Day:</strong> {entry.WaqtDay}
+      <br />
+      <strong>Time:</strong> {entry.Waqt}
+      <br />
+
+      <AnimatePresence initial={false}>
+        {expandindex === index && (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ overflow: "hidden", marginTop: "0.5rem" }}
+          >
+            <p>{entry.text}</p>
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // prevent toggle
+                deleteJ(index);
+              }}
+            >
+              Delete
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.li>
+                        ))}
+                            
+                            
+                            
+                        
+                    
                            
                                 
                             
@@ -191,12 +270,20 @@ function Todoapp(){
                 <h1>Taskify</h1>
             </div>
          <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-            <button onClick={() => setState('Tasks')}
+            <motion.button whileHover={{ scale: 1.1 }}
+                         whileTap={{ scale: 0.95 }}
+            onClick={() => setState('Tasks')}
             
-            >Tasks</button>
-            <button onClick={() => setState('Active-Tasks')}>Active-Tasks</button>
-            <button onClick={() => setState('Completed-Tasks')}>Completed-Tasks</button>
-            <button onClick={() => setState('Journal')}>Journal</button>
+            >Tasks</motion.button>
+            <motion.button whileHover={{ scale: 1.1 }}
+                           whileTap={{ scale: 0.95 }}
+            onClick={() => setState('Active-Tasks')}>Active-Tasks</motion.button>
+            <motion.button whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.95 }} 
+            onClick={() => setState('Completed-Tasks')}>Completed-Tasks</motion.button>
+            <motion.button whileHover={{ scale: 1.1 }}
+                           whileTap={{ scale: 0.95 }}
+            onClick={() => setState('Journal')}>Journal</motion.button>
         </div>
         <div style={{ padding: '1rem', border: '1px solid #ccc' }}>
             {renderTable()}
