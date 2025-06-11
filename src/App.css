@@ -1,3 +1,101 @@
+.container-box {
+  margin: 0 auto; /* center horizontally */
+  width: 400px; /* or a fixed width if needed */
+   border: 1px solid rgb(186, 178, 178);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.205);
+  margin-top: 2rem;
+  
+  
+}
+
+.heading{
+   display: flex;
+  justify-content: center; /* centers all buttons as a group */
+  gap: 1rem; /* optional spacing between buttons */
+
+}
+
+.Button-container{
+   display: flex;
+  justify-content: center; /* centers all buttons as a group */
+  /* gap: 1rem; optional spacing between buttons */
+  
+}
+
+.render-table{
+  display: flex;
+  justify-content: center; /* centers all buttons as a group */
+
+}
+
+.footer-container{
+    background-color: hsla(209, 53%, 69%, 0.95);
+    border-radius: 10px;
+  
+}
+
+.fotter-one{
+   font-size: 14px;
+  color: #1f1e1e;
+  text-align: center;
+  margin-top: 0.2rem;
+  padding: 1rem;
+  border-top: 1px solid #ddd;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+}
+
+.fotter-two{
+     font-size: 14px;
+  color: #323030;
+  text-align: center;
+  margin-top: 0.2rem;
+  padding: 0.5rem;
+  border-top: 1px solid #ddd;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+/* buttons */
+.Button-class {
+  background-color: hsl(220, 90%, 56%); /* modern blue */
+  color: white;
+  padding: 10px 20px;
+  font-size: 8px;
+  font-weight: 500;
+  border: none;
+  /* border-radius: 10px; */
+  cursor: pointer;
+  transition: background-color 0.01s ease, transform 0.01s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Button-class:hover {
+  background-color: hsl(220, 90%, 50%);
+  /* transform: translateY(-1px); */
+}
+
+.Button-class:active {
+  background-color: hsl(220, 90%, 45%);
+  transform: translateY(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .diary-textarea {
   /* width: 100%; */
   min-height: 200px;

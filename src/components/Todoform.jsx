@@ -269,29 +269,37 @@ function Todoapp(){
              <div className="heading"> 
                 <h1>Taskify</h1>
             </div>
-         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
+         <div style={{ display: 'flex', marginBottom: '1rem' }} className="Button-container">
             <motion.button whileHover={{ scale: 1.1 }}
                          whileTap={{ scale: 0.95 }}
             onClick={() => setState('Tasks')}
+            className="Button-class"
+            
             
             >Tasks</motion.button>
             <motion.button whileHover={{ scale: 1.1 }}
                            whileTap={{ scale: 0.95 }}
-            onClick={() => setState('Active-Tasks')}>Active-Tasks</motion.button>
+            onClick={() => setState('Active-Tasks')}
+            className="Button-class"
+            >Active-Tasks</motion.button>
             <motion.button whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }} 
-            onClick={() => setState('Completed-Tasks')}>Completed-Tasks</motion.button>
+            onClick={() => setState('Completed-Tasks')}
+            className="Button-class"
+            >Completed-Tasks</motion.button>
             <motion.button whileHover={{ scale: 1.1 }}
                            whileTap={{ scale: 0.95 }}
-            onClick={() => setState('Journal')}>Journal</motion.button>
+            onClick={() => setState('Journal')}
+            className="Button-class"
+            >Journal</motion.button>
         </div>
-        <div style={{ padding: '1rem', border: '1px solid #ccc' }}>
+        <div style={{ padding: '1rem', border: '1px solid #ccc' }} className="render-table">
             {renderTable()}
         </div>
         {/* Footer */}
-        <div style={{ padding: '1rem', border: '1px solid #ccc' }}>
-            <p>Tasks: {striked.length}</p>
-           <p>Completed Tasks: {completedTasks}</p>
+        <div style={{ padding: '1rem', border: '1px solid #ccc' }} className="footer-container">
+            <h2 className="fotter-one">Tasks: {striked.length}</h2>
+           <h2 className="fotter-two">Completed Tasks: {completedTasks}</h2>
 
         </div>
         </div>
