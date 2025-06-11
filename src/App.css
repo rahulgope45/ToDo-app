@@ -244,7 +244,7 @@
 
 
 .diary-textarea {
-  width: 100%;
+  /* width: 100%; */
   min-height: 200px;
   padding: 1rem;
   font-family: 'Courier New', monospace;
